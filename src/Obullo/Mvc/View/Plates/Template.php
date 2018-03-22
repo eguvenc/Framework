@@ -28,8 +28,8 @@ class Template extends PlatesTemplate implements ContainerAwareInterface
      *
      * @return object Controller
      */
-	public function __get(string $key)
-	{
-		return $this->container->get($key);
-	}
+    public function __get(string $key)
+    {
+        return $this->container->get($key);
+    }
 }
