@@ -10,18 +10,18 @@ namespace Obullo\Mvc\Config;
  */
 class Loader implements LoaderInterface
 {
-	/**
-	 * Load static files
-	 * 
-	 * @param  string  $filename filename
-	 * @param  boolean $object   returns to zend config object
-	 * 
-	 * @return array|object
-	 */
-	public function load(string $filename, $object = false)
-	{
-		$path = str_replace('%env%', getenv('APP_ENV'), $filename);
+    /**
+     * Load static files
+     * 
+     * @param  string  $filename filename
+     * @param  boolean $object   returns to zend config object
+     * 
+     * @return array|object
+     */
+    public function load(string $filename, $object = false)
+    {
+        $path = str_replace('%env%', getenv('APP_ENV'), $filename);
 
-		return \Zend\Config\Factory::fromFile(ROOT.$path, $object);
-	}
+        return \Zend\Config\Factory::fromFile(ROOT.$path, $object);
+    }
 }
