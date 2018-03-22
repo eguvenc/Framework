@@ -18,10 +18,10 @@ class Loader implements LoaderInterface
 	 * 
 	 * @return array|object
 	 */
-    public function load(string $filename, $object = false)
-    {
-    	$path = str_replace('%env%', getenv('APP_ENV'), $filename);
+	public function load(string $filename, $object = false)
+	{
+		$path = str_replace('%env%', getenv('APP_ENV'), $filename);
 
-        return \Zend\Config\Factory::fromFile(ROOT.$path, $object);
-    }
+		return \Zend\Config\Factory::fromFile(ROOT.$path, $object);
+	}
 }
