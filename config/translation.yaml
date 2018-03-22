@@ -1,0 +1,11 @@
+
+# translation:
+#
+
+translation:
+    default_locale: en
+    translator:
+        paths:
+            - '%ROOT%/translations'
+        fallbacks:
+            - en

@@ -1,0 +1,4 @@
+website/.couscous/
+public/
+vendor/
+composer.lock

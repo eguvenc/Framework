@@ -1,0 +1,8 @@
+
+# monolog
+# 
+
+monolog:
+    enabled: true
+    debug: true
+    default_channel: system

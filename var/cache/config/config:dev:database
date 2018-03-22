@@ -1,0 +1,1 @@
+a:2:{s:8:"database";a:1:{s:3:"url";s:19:"%env(DATABASE_URL)%";}s:9:"__mtime__";i:1521725564;}

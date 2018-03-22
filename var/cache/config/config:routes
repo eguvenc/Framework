@@ -1,0 +1,1 @@
+a:2:{s:4:"home";a:2:{s:4:"path";s:1:"/";s:7:"handler";s:39:"App\Controller\DefaultController::index";}s:9:"__mtime__";i:1521719550;}

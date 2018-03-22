@@ -1,0 +1,15 @@
+
+# framework
+#    
+
+framework:
+    default_locale: en
+    cookie:
+        domain:
+        path: /
+
+    session:
+        name: sessions
+
+    php_errors:
+        enabled: true

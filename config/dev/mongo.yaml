@@ -1,0 +1,6 @@
+
+# mongo
+# 
+
+mongo:
+    url: '%env(MONGO_URL)%'

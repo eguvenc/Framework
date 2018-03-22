@@ -1,0 +1,52 @@
+#!/usr/bin/env php
+<?php
+// console
+// 
+set_time_limit(0);
+define('ROOT', __DIR__);
+
+require 'vendor/autoload.php';
+
+use League\Container\{
+	Container,
+	ReflectionContainer
+};
+use Obullo\Mvc\Config\{
+    LoaderInterface,
+    Loader,
+    Reader\YamlReader,
+    Cache\FileHandler
+};
+use Dotenv\Dotenv;
+
+if (false == isset($_SERVER['APP_ENV'])) {
+    (new Dotenv(ROOT))->load();
+}
+$env = getenv('APP_ENV');
+
+$container = new Container;
+$container->delegate(
+    new ReflectionContainer
+);
+$cacheHandler = new FileHandler;
+Zend\Config\Factory::registerReader('yaml',new YamlReader($cacheHandler));
+
+$config = Zend\Config\Factory::fromFiles(
+    [
+        ROOT.'/config/'.$env.'/database.yaml',
+        ROOT.'/config/'.$env.'/monolog.yaml'
+    ]
+);
+$container->share('loader', new Loader);
+$container->addServiceProvider('Services\Logger');
+// $container->addServiceProvider('Services\Database');
+
+/**
+ * Create your console commands
+ */
+use Symfony\Component\Console\Application;
+use Command\DebugCommand;
+
+$application = new Application();
+$application->add(new DebugCommand);
+$application->run();
