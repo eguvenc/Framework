@@ -8,7 +8,7 @@ use Psr\Http\{
     Message\ResponseInterface,
     Message\ServerRequestInterface as Request
 };
-use Obullo\Mvc\Application as Mvc;
+use Obullo\Mvc\Application;
 
 class Router implements MiddlewareInterface
 {
@@ -19,7 +19,7 @@ class Router implements MiddlewareInterface
      * 
      * @param app $app application
      */
-    public function __construct(Mvc $app)
+    public function __construct(Application $app)
     {
         $this->app = $app;
     }
@@ -35,6 +35,8 @@ class Router implements MiddlewareInterface
     public function process(Request $request, RequestHandler $handler) : ResponseInterface
     {
         $router = $this->app->getContainer()->get('router');
+
+        // $route = $router->getMatchedRoute();
 
         if ($route = $router->matchRequest()) {
             $methods = $route->getMethods();

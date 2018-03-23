@@ -9,7 +9,6 @@
         "zendframework/zend-config": "^3.1",
         "obullo/stack": "^1.0",
         "vlucas/phpdotenv": "^2.4",
-        "klaussilveira/simple-shm": "^1.0",
         "league/container": "^2.4",
         "monolog/monolog": "^1.23",
         "doctrine/dbal": "^2.6",

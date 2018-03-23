@@ -18,6 +18,7 @@ require '../../vendor/autoload.php';
 
 define('ROOT', dirname(dirname(__DIR__)));
 
+
 if (false == isset($_SERVER['APP_ENV'])) {
     (new Dotenv(ROOT))->load();
 }
@@ -32,13 +33,26 @@ $container = new Container;
 $container->delegate(
     new ReflectionContainer
 );
+
+use Obullo\Mvc\Dependency\Resolver;
+
+$container->share('request', $request);
+$resolver = new Resolver(new ReflectionClass('App\Middleware\Dummy'));
+$resolver->setContainer($container);
+$params = $resolver->resolve('__construct');
+
+var_dump($params);
+die;
+
 $app = new Config($env);
 $app->setContainer($container);
 $app->start($request);
 
 $stack = new Builder;
-$handler = $stack->withMiddleware(new Error)
-    ->withMiddleware(new Router($app));
+$handler = $stack->withMiddleware(new Error);
+$handler = $app->build($stack);
+$handler = $stack->withMiddleware(new Router($app));
+
 $response = $handler->process($request);
 
 $app->emit($response);

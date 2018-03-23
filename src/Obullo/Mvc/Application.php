@@ -17,6 +17,7 @@ use RuntimeException;
 
 use Obullo\Router\RouteInterface as Route;
 use Obullo\Mvc\Config\LoaderInterface as Loader;
+use Obullo\Http\Stack\StackInterface as Stack;
 
 /**
  * Mvc application
@@ -60,6 +61,25 @@ abstract class Application implements ContainerAwareInterface
         $this->configureRouter($container, $container->get('loader'), $request);
     }
     
+    /**
+     * Build middlewares
+     * 
+     * @return handler
+     */
+    public function build() : Stack
+    {
+        $container = $this->getContainer();
+
+        foreach ($router->getStack() as $value) {
+            $resolver = new Resolver(new ReflectionClass($class));
+            $resolver->setContainer($container);
+            $resolver->resolve('__construct');
+
+            $handler = $stack->withMiddleware($value);
+        }
+        return $handler;
+    }
+
     /**
      * Returns to env
      * 
