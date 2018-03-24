@@ -18,6 +18,6 @@ class Dummy
      */
     public function __construct(Request $request)
     {
-
+        
     }
 }

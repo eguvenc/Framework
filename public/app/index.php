@@ -1,4 +1,5 @@
 <?php
+
 use League\Container\{
 	Container,
 	ReflectionContainer
@@ -33,27 +34,17 @@ $container = new Container;
 $container->delegate(
     new ReflectionContainer
 );
-
-use Obullo\Mvc\Dependency\Resolver;
-
-$container->share('request', $request);
-$resolver = new Resolver(new ReflectionClass('App\Middleware\Dummy'));
-$resolver->setContainer($container);
-$params = $resolver->resolve('__construct');
-
-var_dump($params);
-die;
-
 $app = new Config($env);
 $app->setContainer($container);
 $app->start($request);
 
 $stack = new Builder;
 $handler = $stack->withMiddleware(new Error);
-$handler = $app->build($stack);
-$handler = $stack->withMiddleware(new Router($app));
-
-$response = $handler->process($request);
+foreach ($app->build($stack) as $middleware) {
+	$handler = $stack->withMiddleware($middleware);
+}
+$response = $stack->withMiddleware(new Router($app))
+	->process($request);
 
 $app->emit($response);
 $app->terminate();

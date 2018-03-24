@@ -66,18 +66,18 @@ abstract class Application implements ContainerAwareInterface
      * 
      * @return handler
      */
-    public function build() : Stack
+    public function build() : array
     {
         $container = $this->getContainer();
-
-        foreach ($router->getStack() as $value) {
-            $resolver = new Resolver(new ReflectionClass($class));
+        $middlewares = array();
+        foreach ($container->get('router')->getStack() as $class) {
+            $reflection = new ReflectionClass($class);
+            $resolver = new Resolver($reflection);
             $resolver->setContainer($container);
-            $resolver->resolve('__construct');
-
-            $handler = $stack->withMiddleware($value);
+            $args = $resolver->resolve('__construct');
+            $middlewares[] = $reflection->newInstanceArgs($args);
         }
-        return $handler;
+        return $middlewares;
     }
 
     /**
