@@ -36,9 +36,7 @@ class Router implements MiddlewareInterface
     {
         $router = $this->app->getContainer()->get('router');
 
-        // $route = $router->getMatchedRoute();
-
-        if ($route = $router->matchRequest()) {
+        if ($route = $router->getMatchedRoute()) {
             $methods = $route->getMethods();
             if (! in_array($request->getMethod(), $methods)) {
                 return $handler->process(new NotAllowed($methods));
@@ -46,7 +44,7 @@ class Router implements MiddlewareInterface
             $request = $request->withAttribute('locale', $route->getArgument('locale'));
             $route->removeArgument('locale');
 
-            $response = $this->app->handle($request, $route);
+            $response = $this->app->handle($request, $router);
             if ($response instanceof ResponseInterface) {
                 return $response;
             }

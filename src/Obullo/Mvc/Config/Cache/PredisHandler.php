@@ -35,17 +35,17 @@ class PredisHandler implements CacheInterface
         $this->predis = $predis;
     }
 
-	/**
-	 * Checks the file has cached
-	 * 
-	 * @param  string $file filename
-	 * @return boolean
-	 */
+    /**
+     * Checks the file has cached
+     * 
+     * @param  string $file filename
+     * @return boolean
+     */
     public function has(string $file) : bool
     {
         $key = Self::getKey($file);
         if ($this->predis->exists($key)) {
-        	return true;
+            return true;
         }
         return false;
     }
@@ -61,10 +61,10 @@ class PredisHandler implements CacheInterface
         $key = Self::getKey($file);
         $data = $this->predis->hGetAll($key);
         $mtime = filemtime($file);
-		$time = (int)$data['__mtime__'];
-		if ($mtime > $time) {
-		    $this->predis->delete($key);
-		}
+        $time = (int)$data['__mtime__'];
+        if ($mtime > $time) {
+            $this->predis->delete($key);
+        }
         unset($data['__mtime__']);
         return $data;
     }

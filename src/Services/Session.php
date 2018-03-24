@@ -2,10 +2,12 @@
 
 namespace Services;
 
-use Predis\Client;
-use League\Container\ServiceProvider\AbstractServiceProvider;
+use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
+use Symfony\Component\HttpFoundation\Session\Storage\Handler\NativeFileSessionHandler;
 
-class Predis extends AbstractServiceProvider
+use Obullo\Container\ServiceProvider\AbstractServiceProvider;
+
+class Session extends AbstractServiceProvider
 {
     /**
      * The provides array is a way to let the container
@@ -17,7 +19,7 @@ class Predis extends AbstractServiceProvider
      * @var array
      */
     protected $provides = [
-        'redis'
+        'session'
     ];
 
     /**
@@ -32,15 +34,10 @@ class Predis extends AbstractServiceProvider
     {
         $container = $this->getContainer();
 
-        $redis = $container->get('loader')
-            ->load('redis.yaml', true)
-            ->redis;
+        $storage = new NativeSessionStorage(array(), new NativeFileSessionHandler());
 
-		$client = new Predis\Client([
-		    'scheme' => $redis->scheme,
-		    'host'   => $redis->host,
-		    'port'   => $redis->port,
-		]);
-        $container->share('redis', $client);
+        $container->share('session', 'Symfony\Component\HttpFoundation\Session\Session')
+            ->withArgument($storage)
+            ->withMethodCall('start');
     }
 }

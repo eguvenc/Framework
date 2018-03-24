@@ -33,17 +33,17 @@ class RedisHandler implements CacheInterface
         $this->redis = $redis;
     }
 
-	/**
-	 * Checks the file has cached
-	 * 
-	 * @param  string $file filename
-	 * @return boolean
-	 */
+    /**
+     * Checks the file has cached
+     * 
+     * @param  string $file filename
+     * @return boolean
+     */
     public function has(string $file) : bool
     {
         $key = Self::getKey($file);
         if ($this->redis->exists($key)) {
-        	return true;
+            return true;
         }
         return false;
     }
@@ -59,10 +59,10 @@ class RedisHandler implements CacheInterface
         $key = Self::getKey($file);
         $data = $this->redis->hGetAll($key);
         $mtime = filemtime($file);
-		$time = (int)$data['__mtime__'];
-		if ($mtime > $time) {
-		    $this->redis->delete($key);
-		}
+        $time = (int)$data['__mtime__'];
+        if ($mtime > $time) {
+            $this->redis->delete($key);
+        }
         unset($data['__mtime__']);
         return $data;
     }

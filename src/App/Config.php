@@ -46,6 +46,7 @@ class Config extends Application
     {
         $container->addServiceProvider('Services\Template');
         $container->addServiceProvider('Services\Logger');
+        // $container->addServiceProvider('Services\Session');
         // $container->addServiceProvider('Services\Database');
         // $container->addServiceProvider('Services\Predis');
         // $container->addServiceProvider('Services\Redis');

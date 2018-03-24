@@ -10,14 +10,14 @@ namespace Obullo\Mvc\Config\Cache;
  */
 class FileHandler implements CacheInterface
 {
-	protected $data = array();
+    protected $data = array();
 
-	/**
-	 * Checks the file has cached
-	 * 
-	 * @param  string $file filename
-	 * @return boolean
-	 */
+    /**
+     * Checks the file has cached
+     * 
+     * @param  string $file filename
+     * @return boolean
+     */
     public function has(string $file) : bool
     {
         $id = $this->getFile($file);
@@ -35,11 +35,11 @@ class FileHandler implements CacheInterface
         $id = $this->getFile($file);
         $mtime = filemtime($file);
         $serializedData = file_get_contents($id);
-		$data = unserialize($serializedData);
-		$time = (int)$data['__mtime__'];
-		if ($mtime > $time) {
-		    unlink($id);
-		}
+        $data = unserialize($serializedData);
+        $time = (int)$data['__mtime__'];
+        if ($mtime > $time) {
+            unlink($id);
+        }
         unset($data['__mtime__']);
         return $data;
     }

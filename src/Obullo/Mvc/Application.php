@@ -15,7 +15,7 @@ use Obullo\Mvc\{
 use ReflectionClass;
 use RuntimeException;
 
-use Obullo\Router\RouteInterface as Route;
+use Obullo\Router\Router;
 use Obullo\Mvc\Config\LoaderInterface as Loader;
 use Obullo\Http\Stack\StackInterface as Stack;
 
@@ -56,13 +56,16 @@ abstract class Application implements ContainerAwareInterface
     public function start(Request $request)
     {
         $container = $this->getContainer();
+        $container->share('request', $request);
         $this->configureConfig($container);
         $this->configureContainer($container);
         $this->configureRouter($container, $container->get('loader'), $request);
+
+        $container->get('router')->matchRequest($request);
     }
     
     /**
-     * Build middlewares
+     * Build route middlewares
      * 
      * @return handler
      */
@@ -74,7 +77,10 @@ abstract class Application implements ContainerAwareInterface
             $reflection = new ReflectionClass($class);
             $resolver = new Resolver($reflection);
             $resolver->setContainer($container);
-            $args = $resolver->resolve('__construct');
+            $args = array();
+            if ($reflection->hasMethod('__construct')) {
+                $args = $resolver->resolve('__construct');
+            }
             $middlewares[] = $reflection->newInstanceArgs($args);
         }
         return $middlewares;
@@ -94,15 +100,16 @@ abstract class Application implements ContainerAwareInterface
      * Handle application process
      * 
      * @param  Request $request Psr Request
-     * @param  Route   $route   RouteInterface
+     * @param  Route   $router  Router
      * 
      * @return null|Response
      */
-    public function handle(Request $request, Route $route)
+    public function handle(Request $request, Router $router)
     {
         $container = $this->getContainer();
         $container->share('request', $request);
 
+        $route = $router->getMatchedRoute();
         $handler = $route->getHandler();
         $response = null;
         if (is_callable($handler)) {

@@ -9,15 +9,19 @@ use Psr\Http\{
     Message\ServerRequestInterface as Request
 };
 
-class Dummy
+class Dummy implements MiddlewareInterface
 {
     /**
-     * Constructor
-     * 
-     * @param app $app application
+     * Process request
+     *
+     * @param ServerRequestInterface  $request  request
+     * @param RequestHandlerInterface $handler
+     *
+     * @return object ResponseInterface
      */
-    public function __construct(Request $request)
+    public function process(Request $request, RequestHandler $handler) : ResponseInterface
     {
-        
+        return $handler->handle($request);
     }
+
 }

@@ -4,12 +4,12 @@ namespace Obullo\Mvc\Config\Cache;
 
 interface CacheInterface
 {
-	/**
-	 * Checks the file has cached
-	 * 
-	 * @param  string $file filename
-	 * @return boolean
-	 */
+    /**
+     * Checks the file has cached
+     * 
+     * @param  string $file filename
+     * @return boolean
+     */
     public function has(string $file) : bool;
 
     /**
