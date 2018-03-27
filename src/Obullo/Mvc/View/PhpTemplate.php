@@ -7,10 +7,10 @@ use Obullo\Mvc\Container\{
     ContainerAwareInterface
 };
 use League\Plates\Engine;
+use Obullo\Router\Generator;
+use Obullo\Mvc\View\Plates\Template;
 use Zend\Diactoros\Response;
 use Zend\Diactoros\Response\HtmlResponse;
-use Obullo\Mvc\View\Plates\Template;
-use Obullo\Router\Generator;
 
 /**
  * Plates template engine - http://platesphp.com/

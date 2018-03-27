@@ -39,7 +39,7 @@ class Mongo extends AbstractServiceProvider
             );
         }
         $mongo = $container->get('loader')
-            ->load('mongo.yaml', true)
+            ->load('/config/%env%/mongo.yaml', true)
             ->mongo;
 
         $container->share('mongo', new Manager($mongo->url));

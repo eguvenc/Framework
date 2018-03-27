@@ -34,9 +34,11 @@ class Router implements MiddlewareInterface
      */
     public function process(Request $request, RequestHandler $handler) : ResponseInterface
     {
-        $router = $this->app->getContainer()->get('router');
+        $router = $this->app->getContainer()
+            ->get('router');
 
-        if ($route = $router->getMatchedRoute()) {
+        if ($router->hasMatch()) {
+            $route = $router->getMatchedRoute();
             $methods = $route->getMethods();
             if (! in_array($request->getMethod(), $methods)) {
                 return $handler->process(new NotAllowed($methods));

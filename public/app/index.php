@@ -49,4 +49,4 @@ $app->emit($response);
 $app->terminate();
 
 $time_end = microtime(true);
-echo number_format($time_end - $time_start, 4);
+// echo number_format($time_end - $time_start, 4);

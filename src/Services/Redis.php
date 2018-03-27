@@ -38,7 +38,7 @@ class Redis extends AbstractServiceProvider
             );
         }
         $redis = $container->get('loader')
-            ->load('redis.yaml', true)
+            ->load('/config/%env%/redis.yaml', true)
             ->redis;
 
         $client = new \Redis;

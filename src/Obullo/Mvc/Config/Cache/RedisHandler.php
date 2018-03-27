@@ -2,7 +2,7 @@
 
 namespace Obullo\Mvc\Config\Cache;
 
-use Redis;
+use InvalidArgumentException;
 
 /**
  * Redis
@@ -28,8 +28,17 @@ class RedisHandler implements CacheInterface
      * 
      * @param Redis $redis redis
      */
-    public function __construct(Redis $redis)
+    public function __construct($redis)
     {
+        if (!$redis instanceof \Redis && !$redis instanceof \RedisArray && !$redis instanceof \Predis\Client && !$redis instanceof RedisProxy) {
+            throw new InvalidArgumentException(
+                sprintf(
+                    '%s() expects parameter 1 to be Redis, RedisArray, RedisCluster or Predis\Client, %s given',
+                    __METHOD__,
+                    is_object($redis) ? get_class($redis) : gettype($redis)
+                )
+            );
+        }
         $this->redis = $redis;
     }
 

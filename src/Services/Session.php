@@ -5,7 +5,7 @@ namespace Services;
 use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
 use Symfony\Component\HttpFoundation\Session\Storage\Handler\NativeFileSessionHandler;
 
-use Obullo\Container\ServiceProvider\AbstractServiceProvider;
+use League\Container\ServiceProvider\AbstractServiceProvider;
 
 class Session extends AbstractServiceProvider
 {
@@ -34,10 +34,15 @@ class Session extends AbstractServiceProvider
     {
         $container = $this->getContainer();
 
-        $storage = new NativeSessionStorage(array(), new NativeFileSessionHandler());
+        $app = $container->get('loader')
+            ->load('/config/%env%/app.yaml', true)
+            ->app;
 
-        $container->share('session', 'Symfony\Component\HttpFoundation\Session\Session')
-            ->withArgument($storage)
-            ->withMethodCall('start');
+        $storage = new NativeSessionStorage(array(), new NativeFileSessionHandler());
+        $session = new \Symfony\Component\HttpFoundation\Session\Session($storage);
+        $session->setName($app->session->name);
+        $session->start();
+
+        $container->share('session', $session);
     }
 }

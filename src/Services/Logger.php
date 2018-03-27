@@ -34,8 +34,8 @@ class Logger extends AbstractServiceProvider
     {
         $container = $this->getContainer();
 
-        $monolog = $container->get('config')
-            ->load('monolog.yaml', true)
+        $monolog = $container->get('loader')
+            ->load('/config/%env%/monolog.yaml', true)
             ->monolog;
 
         $logger = $container->share('logger', 'Monolog\Logger')

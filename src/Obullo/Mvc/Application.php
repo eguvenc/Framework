@@ -161,15 +161,27 @@ abstract class Application implements ContainerAwareInterface
     {
         $statusCode = $this->response->getStatusCode();
         foreach ($this->response->getHeaders() as $header => $values) {
-            $name  = $header;
-            $first = $name === 'Set-Cookie' ? false : true;
+            $name = $header;
             foreach ($values as $value) {
                 header(sprintf(
                     '%s: %s',
                     $name,
                     $value
-                ), $first, $statusCode);
-                $first = false;
+                ), true, $statusCode);
+            }
+        }
+        $container = $this->getContainer();
+        if ($container->has('cookie')) {
+            foreach ($container->get('cookie')->toArray() as $name => $cookie) {
+                setcookie(
+                    $name,
+                    $cookie['value'],
+                    $cookie['expire'],
+                    $cookie['path'],
+                    $cookie['domain'],
+                    $cookie['secure'],
+                    $cookie['httpOnly']
+                );   
             }
         }
     }

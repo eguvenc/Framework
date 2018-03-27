@@ -5,17 +5,15 @@
         }
     },
     "require": {
-        "zendframework/zend-diactoros": "^1.7",
-        "zendframework/zend-config": "^3.1",
         "obullo/stack": "^1.0",
+        "obullo/router": "^1.0",
+        "zendframework/zend-config": "^3.1",
         "vlucas/phpdotenv": "^2.4",
+        "league/plates": "^3.3",
         "league/container": "^2.4",
         "monolog/monolog": "^1.23",
         "doctrine/dbal": "^2.6",
-        "league/plates": "^3.3",
-        "obullo/router": "^1.0",
-        "symfony/console": "^4.0",
         "predis/predis": "^1.1",
-        "symfony/http-foundation": "^4.0"
+        "symfony/console": "^4.0"
     }
 }

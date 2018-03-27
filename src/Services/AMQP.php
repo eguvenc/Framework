@@ -39,8 +39,8 @@ class AMQP extends AbstractServiceProvider
             );
         }
         $amqp = $container->get('loader')
-            ->load('amqp.yaml', true)
-            ->redis;
+            ->load('/config/%env%/amqp.yaml', true)
+            ->amqp;
 
         $params['port']  = empty($params['port']) ? "5672" : $params['port'];
         $params['vhost'] = empty($params['vhost']) ? "/" : $params['vhost'];

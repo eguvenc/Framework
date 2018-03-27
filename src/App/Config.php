@@ -34,8 +34,8 @@ class Config extends Application
 
         $config = \Zend\Config\Factory::fromFiles(
             [
+                ROOT.'/config/'.$this->getEnv().'/app.yaml',
                 ROOT.'/config/'.$this->getEnv().'/database.yaml',
-                ROOT.'/config/'.$this->getEnv().'/framework.yaml',
                 ROOT.'/config/'.$this->getEnv().'/monolog.yaml',
             ]
         );
@@ -46,6 +46,7 @@ class Config extends Application
     {
         $container->addServiceProvider('Services\Template');
         $container->addServiceProvider('Services\Logger');
+        $container->addServiceProvider('Services\Cookie');
         // $container->addServiceProvider('Services\Session');
         // $container->addServiceProvider('Services\Database');
         // $container->addServiceProvider('Services\Predis');

@@ -5,7 +5,7 @@ Each application should contains configuration like below.
 
 ### Apache web server
 
-In your Apache configuration file, `DocumentRoot` should be set to directory `/project/path/public/app/`.
+In your configuration file `DocumentRoot` should be set to directory `/project/path/public/app/`.
 
 ```
 <VirtualHost *:80>

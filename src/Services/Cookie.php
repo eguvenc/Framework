@@ -2,10 +2,9 @@
 
 namespace Services;
 
-use Predis\Client;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 
-class Predis extends AbstractServiceProvider
+class Cookie extends AbstractServiceProvider
 {
     /**
      * The provides array is a way to let the container
@@ -17,7 +16,7 @@ class Predis extends AbstractServiceProvider
      * @var array
      */
     protected $provides = [
-        'redis'
+        'cookie'
     ];
 
     /**
@@ -31,16 +30,23 @@ class Predis extends AbstractServiceProvider
     public function register()
     {
         $container = $this->getContainer();
+        
+        $app = $container->get('loader')
+            ->load('/config/%env%/app.yaml', true)
+            ->app;
 
-        $redis = $container->get('loader')
-            ->load('/config/%env%/redis.yaml', true)
-            ->redis;
+        $params = [
+            'domain' => $app->domain,
+            'path'   => $app->path,
+            'secure' => $app->secure,
+            'httpOnly' => $app->httpOnly,
+            'expire' => $app->expire,
+        ];
+        $requestCookies = $container->get('request')
+            ->getCookieParams();
+        $cookie = new \Obullo\Mvc\Http\Cookie($requestCookies);
+        $cookie->setDefaults($params);
 
-		$client = new Predis\Client([
-		    'scheme' => $redis->scheme,
-		    'host'   => $redis->host,
-		    'port'   => $redis->port,
-		]);
-        $container->share('redis', $client);
+        $container->share('cookie', $cookie);
     }
 }
