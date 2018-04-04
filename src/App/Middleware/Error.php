@@ -223,4 +223,14 @@ class Error implements MiddlewareInterface
     
         return $error;
     }
+
+    /**
+     * Returns to error response
+     * 
+     * @return object
+     */
+    public function getResponse() : ResponseInterface
+    {
+        return $this->errResponse;
+    }
 }

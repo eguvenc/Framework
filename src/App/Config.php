@@ -25,22 +25,18 @@ use Obullo\Router\Types\{
     IntType,
     TranslationType
 };
+use Obullo\Http\Stack\StackInterface as Stack;
+
 class Config extends Application
 {
-	protected function configureConfig(Container $container)
-	{
-        $cacheHandler = new FileHandler;
-        \Zend\Config\Factory::registerReader('yaml',new YamlReader($cacheHandler));
-
+    protected function configureConfig(Container $container)
+    {
         $config = \Zend\Config\Factory::fromFiles(
             [
                 ROOT.'/config/'.$this->getEnv().'/app.yaml',
-                ROOT.'/config/'.$this->getEnv().'/database.yaml',
-                ROOT.'/config/'.$this->getEnv().'/monolog.yaml',
             ]
         );
-        $container->share('loader', new Loader);
-	}
+    }
 
     protected function configureContainer(Container $container)
     {
@@ -55,24 +51,17 @@ class Config extends Application
         // $container->addServiceProvider('Services\Mongo');
     }
 
-    protected function configureRouter(Container $container, LoaderInterface $loader, Request $request)
+    protected function configureMiddleware(Stack $stack) : Stack
     {
-        $context = new RequestContext;
-        $context->fromRequest($request);
+        $module = $this->getModule()->getName();
 
-        $config = array(
-            'types' => [
-                new IntType('<int:id>'),
-                new IntType('<int:page>'),
-                new StrType('<str:name>'),
-                new TranslationType('<locale:locale>'),
-            ]
-        );
-        $collection = new RouteCollection($config);
-        $collection->setContext($context);
-        $builder = new Builder($collection);
-        $collection = $builder->build($loader->load('/config/routes.yaml'));
+        $Error  = "{$module}\Middleware\Error";
+        $Router = "{$module}\Middleware\Router";
 
-        $container->share('router', new Router($collection));
+        $stack = $stack->withMiddleware(new $Error);
+        foreach ($this->build($stack) as $middleware) {
+            $stack = $stack->withMiddleware($middleware);
+        }
+        return $stack->withMiddleware(new $Router($this));
     }
 }

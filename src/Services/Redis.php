@@ -45,6 +45,14 @@ class Redis extends AbstractServiceProvider
         $client->connect($redis->host, $redis->port);
         $client->setOption(\Redis::OPT_SERIALIZER, \Redis::SERIALIZER_PHP);
 
+        /* 
+        // OR Predis 
+        $client = new Predis\Client([
+            'scheme' => $redis->scheme,
+            'host'   => $redis->host,
+            'port'   => $redis->port,
+        ]);
+        */
         $container->share('redis', $client);
     }
 }

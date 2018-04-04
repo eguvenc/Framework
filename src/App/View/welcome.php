@@ -37,8 +37,8 @@
             <h4>Welcome to easy to use Php Components.</h4>
           </div>
 
-        <p class="lead">If you are new to use <kbd>Obullo/Skeleton</kbd> with <kbd>Obullo/Mvc</kbd> please follow the link below.</p>
-        <p><a class="btn btn-lg btn-default" href="http://skeleton.obullo.com/" role="button" target="_blank">Getting Started</a></p>
+        <p class="lead">If you are new to use <kbd>Obullo/Skeleton</kbd> please click below.</p>
+        <p><a class="btn btn-lg btn-default" href="http://mvc.obullo.com/" role="button" target="_blank">Getting Started</a></p>
 
       </div>
 
@@ -46,7 +46,9 @@
 
 
       <footer class="footer">
+        <div class="container">
           <p>&nbsp;&nbsp;</p>
+        </div>
       </footer>
 
   </body>

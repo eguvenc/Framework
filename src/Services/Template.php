@@ -7,6 +7,9 @@ use League\Plates\Extension\Asset;
 use League\Container\ServiceProvider\AbstractServiceProvider;
 use Obullo\Mvc\View\PhpTemplate;
 
+/**
+ * Plates native php template - http://platesphp.com/
+ */
 class Template extends AbstractServiceProvider
 {
     /**
@@ -34,10 +37,10 @@ class Template extends AbstractServiceProvider
     {
         $container = $this->getContainer();
 
-        $engine = new Engine(ROOT.'/src/App/View');
+        $engine = new Engine(ROOT.'/App/View');
         $engine->setFileExtension('php');
-        $engine->addFolder('templates', ROOT.'/templates');
-        $engine->loadExtension(new Asset('/assets/', true));
+        // $engine->addFolder('templates', ROOT.'/templates');
+        $engine->loadExtension(new Asset('/public/assets/', true));
 
         $template = new PhpTemplate($engine);
         $template->setContainer($container);

@@ -12,16 +12,16 @@ use Zend\Diactoros\Response\HtmlResponse;
 
 class NotAllowed implements MiddlewareInterface
 {
-    protected $allowedMethods;
+    protected $methods;
 
     /**
      * Constructor
      * 
-     * @param array $allowedMethods methods
+     * @param array $methods allowed methods
      */
-    public function __construct($allowedMethods)
+    public function __construct($methods)
     {
-        $this->allowedMethods = (array)$allowedMethods;
+        $this->methods = (array)$methods;
     }
 
     /**
@@ -36,7 +36,7 @@ class NotAllowed implements MiddlewareInterface
     {
         $html = sprintf(
             'Only Http %s Methods Allowed',
-            implode(', ', $this->allowedMethods)
+            implode(', ', $this->methods)
         );
         // return new JsonResponse($json, 405, [], JSON_PRETTY_PRINT);
 
@@ -48,8 +48,8 @@ class NotAllowed implements MiddlewareInterface
      * 
      * @return array
      */
-    public function getAllowedMethods()
+    public function getAllowedMethods() : array
     {
-        return $this->allowedMethods;
+        return $this->methods;
     }
 }

@@ -5,12 +5,8 @@
         }
     },
     "require": {
-        "obullo/stack": "^1.0",
-        "obullo/router": "^1.0",
-        "zendframework/zend-config": "^3.1",
+        "obullo/mvc": "^1.0",
         "vlucas/phpdotenv": "^2.4",
-        "league/plates": "^3.3",
-        "league/container": "^2.4",
         "monolog/monolog": "^1.23",
         "doctrine/dbal": "^2.6",
         "predis/predis": "^1.1",

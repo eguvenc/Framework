@@ -1,17 +1,17 @@
 
 ## Host configuration
 
-Each application should contains configuration like below.
+Application should contains configuration like below.
 
 ### Apache web server
 
-In your configuration file `DocumentRoot` should be set to directory `/project/path/public/app/`.
+In your configuration file `DocumentRoot` should be set to directory `/project/path/public/`.
 
 ```
 <VirtualHost *:80>
 
         ServerAdmin webmaster@localhost
-        DocumentRoot /var/www/myproject/public/app/
+        DocumentRoot /var/www/myproject/public/
 
         ServerName myproject
         DirectoryIndex index.php

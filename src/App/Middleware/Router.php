@@ -46,7 +46,7 @@ class Router implements MiddlewareInterface
             $request = $request->withAttribute('locale', $route->getArgument('locale'));
             $route->removeArgument('locale');
 
-            $response = $this->app->handle($request, $router);
+            $response = $this->app->handle($request);
             if ($response instanceof ResponseInterface) {
                 return $response;
             }
