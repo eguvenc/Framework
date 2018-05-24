@@ -1,0 +1,1 @@
+a:4:{s:9:"404_error";a:2:{s:5:"title";s:18:"404 Page Not Found";s:7:"message";s:47:"The page you are looking for could not be found";}s:9:"405_error";a:2:{s:5:"title";s:22:"405 Method Not Allowed";s:7:"message";s:23:"Http method not allowed";}s:9:"app_error";a:2:{s:5:"title";s:17:"Application Error";s:7:"message";s:17:"An error occurred";}s:9:"__mtime__";i:1524171123;}

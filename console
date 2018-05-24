@@ -7,16 +7,10 @@ define('ROOT', __DIR__);
 
 require 'vendor/autoload.php';
 
-use League\Container\{
-	Container,
-	ReflectionContainer
-};
-use Obullo\Mvc\Config\{
-    LoaderInterface,
-    Loader,
-    Reader\YamlReader,
-    Cache\FileHandler
-};
+use Zend\ServiceManager\ServiceManager;
+use Obullo\Mvc\Config\Loader\YamlLoader;
+use Obullo\Mvc\Config\Cache\FileHandler;
+
 use Dotenv\Dotenv;
 
 if (false == isset($_SERVER['APP_ENV'])) {
@@ -24,22 +18,33 @@ if (false == isset($_SERVER['APP_ENV'])) {
 }
 $env = getenv('APP_ENV');
 
-$container = new Container;
-$container->delegate(
-    new ReflectionContainer
-);
-$cacheHandler = new FileHandler;
-Zend\Config\Factory::registerReader('yaml',new YamlReader($cacheHandler));
+// -------------------------------------------------------------------
+// Service Manager
+// -------------------------------------------------------------------
+//
+$container = new ServiceManager;
 
-$config = Zend\Config\Factory::fromFiles(
+$cacheHandler = new FileHandler('/var/cache/config/');
+
+// To change default cache handler uncomment doc blocks and set your own.
+
+// use Obullo\Mvc\Config\Cache\RedisHandler;
+// $cacheHandler = new RedisHandler($container->get('redis'));
+
+$loader = new YamlLoader($cacheHandler);
+
+$env = getenv('APP_ENV');
+
+// Put all config files here you want to load at bootstrap.
+
+\Zend\Config\Factory::fromFiles(
     [
         ROOT.'/config/'.$env.'/database.yaml',
         ROOT.'/config/'.$env.'/monolog.yaml'
     ]
 );
-$container->share('loader', new Loader);
-$container->addServiceProvider('Services\Logger');
-// $container->addServiceProvider('Services\Database');
+$container->setService('loader', $loader);
+$container->setFactory('logger', 'Services\LoggerFactory');
 
 use Symfony\Component\Console\Application;
 use Command\DebugCommand;

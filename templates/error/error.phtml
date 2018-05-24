@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title><?php echo $translator->translate($message) ?></title>
+<style>
+body{ color: #777575 !important; margin:0 !important; padding:20px !important; font-family:Arial,Verdana,sans-serif !important;font-weight:normal;  }
+h1, h2, h3, h4 {
+    margin: 0;
+    padding: 0;
+    font-weight: normal;
+    line-height:48px;
+}
+</style>
+</head>
+<body>
+<h1><?php echo $translator->translate('Application Error') ?></h1>
+<?php if (empty($e)) { ?>
+<h3><?php echo $translator->translate($message) ?></h3>
+<?php } else { ?>
+<section class="head">
+	<table>
+		<tr><td style="width:10%"><?php echo $translator->translate('Type') ?></td><td><?php echo get_class($e) ?></td></tr>
+		<?php if (($message = $e->getMessage())) { ?>
+		    <tr><td><?php echo $translator->translate('Message') ?></td><td><?php echo $message ?></td></tr>
+		<?php } ?>
+		<?php if (($code = $e->getCode())) { ?>
+    		<tr><td><?php echo $translator->translate('Code') ?></td><td><?php echo $code ?></td></tr>
+		<?php } ?>
+		<?php if (($file = $e->getFile())) { ?>
+		    <tr><td><?php echo $translator->translate('File') ?></td><td><?php echo $file ?></td></tr>
+		<?php } ?>
+		<?php if (($line = $e->getLine())) { ?>
+		    <tr><td><?php echo $translator->translate('Line') ?></td><td><?php echo $line ?></td></tr>
+		<?php } ?>
+	</table>
+</section>
+<section class="trace">
+<?php if (($trace = $e->getTraceAsString())) { ?>
+    <h2>Trace</h2>
+    <pre><?php echo htmlentities($trace) ?></pre>
+<?php } ?>
+</section>
+<?php } ?>
+</body>
+</html>

@@ -2,7 +2,8 @@
 # application
 #    
 
-app:
+framework:
+    
     cookie:
         domain:
         path: /
@@ -12,3 +13,6 @@ app:
 
     session:
         name: sessions
+        
+    translator:
+        default_locale: 'en'

@@ -4,5 +4,6 @@
 #    handler: App\Controller\DefaultController::index
 
 home:
+    ## method: POST
     path: /
     handler: App\Controller\DefaultController::index
