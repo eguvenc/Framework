@@ -46,7 +46,7 @@ $container->setFactory('escaper', 'Services\EscaperFactory');
 set_exception_handler(array($container->get('error'), 'handle'));
 
 // -------------------------------------------------------------------
-// Application
+// Events
 // -------------------------------------------------------------------
 //
 $listeners = [
