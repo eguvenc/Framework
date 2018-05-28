@@ -9,6 +9,7 @@ php:
 services:
   - mysql
   - amqp
+  - rabbitmq
   - memcached
   - redis-server
 
@@ -17,7 +18,7 @@ before_script:
   - phpenv config-add .travis.ini
   - mysql -u root -e "SET PASSWORD FOR 'root'@'localhost' = PASSWORD('')"
   - mysql -e 'CREATE DATABASE test;'
-  
+
 cache:
     directories:
         - $HOME/.composer/cache

@@ -27,16 +27,13 @@ class AMQPFactory implements FactoryInterface
         $amqp = $container->get('loader')
             ->loadEnvConfigFile('amqp.yaml', true)
             ->amqp;
-
-        $params['port']  = empty($params['port']) ? "5672" : $params['port'];
-        $params['vhost'] = empty($params['vhost']) ? "/" : $params['vhost'];
-
+            
         $connection = new AMQPConnection;
-        $connection->setHost($params['host']);
-        $connection->setPort($params['port']);
-        $connection->setLogin($params['username']);
-        $connection->setPassword($params['password']);
-        $connection->setVHost($params['vhost']);
+        $connection->setHost($amqp->host);
+        $connection->setPort($amqp->port);
+        $connection->setLogin($amqp->username);
+        $connection->setPassword($amqp->password);
+        $connection->setVHost($amqp->vhost);
         $connection->connect();
 
         return $connection;
