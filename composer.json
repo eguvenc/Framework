@@ -11,7 +11,7 @@
         "obullo/stack": "^1.0",
         "obullo/router": "^1.0",
         "league/plates": "^3.3",
-        "doctrine/dbal": "^2.6",
+        "doctrine/dbal": "2.5.13",
         "monolog/monolog": "^1.23",
         "symfony/console": "^4.0",
         "vlucas/phpdotenv": "^2.4",
