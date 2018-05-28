@@ -15,16 +15,10 @@ services:
 before_script:
   - composer install
   - phpenv config-add .travis.ini
-
-test:
-  adapter: mysql2
-  database: test
-  username: root
-  encoding: utf8
-
+  
 before_install:
   - mysql -u root -e "SET PASSWORD FOR 'root'@'localhost' = PASSWORD('')"
-  - mysql -e 'CREATE DATABASE IF NOT EXISTS test;'
+  - mysql -u root -e 'CREATE DATABASE test;'
 
 cache:
     directories:
