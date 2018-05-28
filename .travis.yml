@@ -13,7 +13,7 @@ services:
   - memcached
   - redis-server
 
-# sudo: required
+sudo: required
 dist: trusty
 group: edge
 
