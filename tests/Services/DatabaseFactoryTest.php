@@ -21,17 +21,17 @@ class DatabaseFactoryTest extends PHPUnit_Framework_TestCase
 
 	public function testDatabaseQuery()
 	{
+  		$conn = $this->container->get('database');
+
 		### https://www.codediesel.com/mysql/creating-sql-schemas-with-doctrine-dbal/
-
+		
 		$schema = new \Doctrine\DBAL\Schema\Schema;
-
 		$usersTable = $schema->createTable("test_users");
 		 
 		$usersTable->addColumn("id", "integer", array("unsigned" => true));
 		$usersTable->addColumn("name", "string", array("length" => 64));
 		$usersTable->setPrimaryKey(array("id"));
 
-  		$conn = $this->container->get('database');
   		$conn->setFetchMode(\PDO::FETCH_ASSOC);
 		$sm = $conn->getSchemaManager();
 
