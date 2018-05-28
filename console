@@ -12,11 +12,15 @@ use Obullo\Mvc\Config\Loader\YamlLoader;
 use Obullo\Mvc\Config\Cache\FileHandler;
 
 use Dotenv\Dotenv;
+use Symfony\Component\Console\Input\ArgvInput;
+
+// The check is to ensure we don't use .env in production
 
 if (false == isset($_SERVER['APP_ENV'])) {
     (new Dotenv(ROOT))->load();
 }
-$env = getenv('APP_ENV');
+$input = new ArgvInput();
+$env = $input->getParameterOption(['--env', '-e'], $_SERVER['APP_ENV'] ?? 'dev', true);
 
 // -------------------------------------------------------------------
 // Service Manager
@@ -32,8 +36,6 @@ $cacheHandler = new FileHandler('/var/cache/config/');
 // $cacheHandler = new RedisHandler($container->get('redis'));
 
 $loader = new YamlLoader($cacheHandler);
-
-$env = getenv('APP_ENV');
 
 // Put all config files here you want to load at bootstrap.
 

@@ -1,16 +1,20 @@
 <?php
 
-use Dotenv\Dotenv;
-use Obullo\Mvc\Application;
-use Zend\ServiceManager\ServiceManager;
-
 require '../../vendor/autoload.php';
 
 define('ROOT', dirname(dirname(__DIR__)));
 define('APP', 'App');
 
-putenv('APP_ENV=dev');
-$env = getenv('APP_ENV');
+use Obullo\Mvc\Application;
+use Zend\ServiceManager\ServiceManager;
+use Dotenv\Dotenv;
+
+// The check is to ensure we don't use .env in production
+
+if (false == isset($_SERVER['APP_ENV'])) {
+    (new Dotenv(ROOT))->load();
+}
+$env = $_SERVER['APP_ENV'] ?? 'dev';
 
 if ('prod' !== $env) {
     ini_set('display_errors', 1);  

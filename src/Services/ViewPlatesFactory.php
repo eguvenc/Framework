@@ -26,9 +26,8 @@ class ViewPlatesFactory implements FactoryInterface
         $engine->addFolder('templates', ROOT.'/templates');
         $engine->loadExtension(new Asset(ROOT.'/public/'.strtolower(APP).'/', false));
 
-        /**
-         * View helpers
-         */
+        // Helpers
+
         $engine->registerFunction('url', new Helper\Url($this->getContainer()));
         $engine->registerFunction('escapeHtml', new Helper\EscapeHtml);
         $engine->registerFunction('escapeHtmlAttr', new Helper\EscapeHtmlAttr);

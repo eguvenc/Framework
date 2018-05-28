@@ -1,3 +1,5 @@
 website/.couscous/
 vendor/
+/var/cache/config/
+/var/log/
 composer.lock
