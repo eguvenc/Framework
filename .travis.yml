@@ -15,10 +15,13 @@ services:
 before_script:
   - composer install
   - phpenv config-add .travis.ini
+  - cp .travis.database.yml config/database.yml
+  - mysql -e 'CREATE DATABASE test;'
   
-before_install:
-  - mysql -u root -e "SET PASSWORD FOR 'root'@'localhost' = PASSWORD('')"
-  - mysql -u root -e 'CREATE DATABASE test;'
+
+## before_install:
+  ## - mysql -u root -e "SET PASSWORD FOR 'root'@'localhost' = PASSWORD('')"
+  ## - mysql -u root -e 'CREATE DATABASE test;'
 
 cache:
     directories:
