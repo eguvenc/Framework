@@ -6,7 +6,7 @@ use Doctrine\DBAL\{
     DriverManager,
     Configuration
 };
-use Obullo\Mvc\Logger\SQLLogger\DoctrineDBAL as SQLLogger;
+use Obullo\Mvc\Logger\SQLLogger;
 use Interop\Container\ContainerInterface;
 use Zend\ServiceManager\Factory\FactoryInterface;
 
@@ -41,6 +41,8 @@ class DatabaseFactory implements FactoryInterface
         if ($monolog->enabled && $monolog->debug) {
             $config->setSQLLogger(new SQLLogger($container->get('logger')));
         }
-        return DriverManager::getConnection($connectionParams, $config);
+        $conn = DriverManager::getConnection($connectionParams, $config);
+        $conn->setFetchMode(\PDO::FETCH_OBJ);
+        return $conn;
     }
 }

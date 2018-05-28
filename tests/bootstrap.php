@@ -10,7 +10,11 @@ ini_set('session.use_cookies', 0);
 $autoloader = require ROOT . '/vendor/autoload.php';
 
 define('APP', 'App');
-putenv("APP_ENV=dev");
+
+use Dotenv\Dotenv;
+if (false == isset($_SERVER['APP_ENV'])) {
+    (new Dotenv(ROOT))->load();
+}
 
 // require dirname(__FILE__) . '/getallheaders.php';
 // 

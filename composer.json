@@ -6,6 +6,8 @@
     },
     "require": {
         "php": "^7.0",
+        "phpunit/phpunit": "^4.8",
+        "obullo/mvc": "dev-master",
         "obullo/stack": "^1.0",
         "obullo/router": "^1.0",
         "league/plates": "^3.3",
