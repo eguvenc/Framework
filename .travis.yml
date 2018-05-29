@@ -17,6 +17,10 @@ before_script:
   - phpenv config-add .travis.ini
   - mysql -u root -e "SET PASSWORD FOR 'root'@'localhost' = PASSWORD('')"
   - mysql -e 'CREATE DATABASE test;'
+  - wget http://pecl.php.net/get/mongodb-1.4.3.tgz tar -xzf mongodb-1.4.3.tgz
+sh -c "cd mongodb-1.4.3 && phpize && ./configure && sudo make install"
+echo "extension=mongodb.so" >> `php --ini | grep "Loaded Configuration" | sed -e "s|.*:\s*||"`'
+
   ## - sleep 15
   ## - mongo mydb_test --eval 'db.createUser({user:"root",pwd:"test",roles:["readWrite"]});'
 
