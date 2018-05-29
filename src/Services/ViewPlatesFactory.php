@@ -21,14 +21,14 @@ class ViewPlatesFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        $engine = new Engine(ROOT.'/'.APP.'/View');
+        $engine = new Engine(ROOT.'/src/'.APP.'/View');
         $engine->setFileExtension('phtml');
         $engine->addFolder('templates', ROOT.'/templates');
         $engine->loadExtension(new Asset(ROOT.'/public/'.strtolower(APP).'/', false));
 
         // Helpers
 
-        $engine->registerFunction('url', new Helper\Url($this->getContainer()));
+        $engine->registerFunction('url', new Helper\Url($container));
         $engine->registerFunction('escapeHtml', new Helper\EscapeHtml);
         $engine->registerFunction('escapeHtmlAttr', new Helper\EscapeHtmlAttr);
         $engine->registerFunction('escapeCss', new Helper\EscapeCss);

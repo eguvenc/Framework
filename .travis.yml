@@ -8,20 +8,17 @@ php:
 
 services:
   - mysql
-  - amqp
-  - rabbitmq
   - memcached
+  - mongodb
   - redis-server
-
-sudo: required
-dist: trusty
-group: edge
 
 before_script:
   - composer install
   - phpenv config-add .travis.ini
   - mysql -u root -e "SET PASSWORD FOR 'root'@'localhost' = PASSWORD('')"
   - mysql -e 'CREATE DATABASE test;'
+  ## - sleep 15
+  ## - mongo mydb_test --eval 'db.createUser({user:"root",pwd:"test",roles:["readWrite"]});'
 
 cache:
     directories:

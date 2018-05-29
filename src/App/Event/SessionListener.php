@@ -27,5 +27,7 @@ class SessionListener implements ListenerAggregateInterface,ContainerAwareInterf
         // 
     	$container = $this->getContainer();
     	$manager   = $container->get('session');
+
+        $manager->start();
     }
 }

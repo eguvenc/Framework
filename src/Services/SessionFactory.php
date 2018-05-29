@@ -28,9 +28,10 @@ class SessionFactory implements FactoryInterface
         $manager->setStorage(new SessionArrayStorage());
         $manager->getValidatorChain()
             ->attach('session.validate', [new HttpUserAgent(), 'isValid']);
-        $manager->setName($framework->session->name);
-        $manager->start();
 
+        if (false == defined('STDIN')) {
+            $manager->setName($framework->session->name);
+        }
         return $manager;
     }
 }

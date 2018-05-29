@@ -28,6 +28,7 @@ class TranslatorFactory implements FactoryInterface
             
         $translator = new Translator;
         $translator->setLocale($config->default_locale);
+        
 		return $translator;
     }
 }
